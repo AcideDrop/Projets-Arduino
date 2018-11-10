@@ -1,0 +1,49 @@
+
+// 10-11-2018
+// @c!d€
+
+
+// Cablage 
+
+// Capteur --> Carte Arduino Uno
+// Vcc --> +5V Arduino
+// GND --> GND Arduino
+// A0 (sortie analogique) --> pin A0 Arduino
+// D0 (sortie digitale) --> pin 3 digitale Arduino
+
+// Ralais --> Carte Arduino Uno
+// Vcc --> Vcc Arduino
+// GND --> GND Arduino
+// COM (sortie digitale) --> pin 5 digitale Arduino
+
+
+
+int PinHumidite = 0;
+int humid;
+
+void setup() {
+Serial.begin(9600);
+pinMode(PinHumidite, INPUT); // Capteur humidité
+pinMode(5, OUTPUT); // Relais
+digitalWrite(5, LOW); // Pompe off
+ }
+
+
+void loop() {
+humid= analogRead(PinHumidite); // Lecture capteur humidité
+Serial.println(humid); // Affichage humidité dans la consolle Arduino
+
+if (humid>700) // Seuil de déclangement INFO : (dans l'air : 1023, dans l'eau 0)
+  {
+ digitalWrite(5, HIGH); // Allumage de la pompe
+  Serial.println("==== Pompe en marche ====");
+  delay(10000); // temps arrosage 
+ digitalWrite(5, LOW); // Arret pompe
+  Serial.println("==== Pompe à l'arret ====");
+  }
+
+Serial.println(" ");
+delay(600); // temps entre chaque mesure 
+
+
+}
